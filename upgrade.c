@@ -282,6 +282,8 @@ static int communicate_with_loader(struct_xmodem_t *xm, char *behavior)
 static int write_cmd(struct_xmodem_t *xm, char cmd[])
 {
 	printf(cmd);
+	printf("\r\n");
+	
 	int ret = 0;
 	ret = write(*(int *)(xm->serial_handler), cmd, strlen(cmd));
 	if (ret != strlen(cmd))
@@ -290,6 +292,13 @@ static int write_cmd(struct_xmodem_t *xm, char cmd[])
 		return ERROR_ONOCOY;
 	}
 	sleep(1);
+
+	char data_buff[256] = {0};
+	ret = xm->recv_data(xm, data_buff, sizeof(data_buff), 10); 
+	printf("reply:\r\n");
+	printf(data_buff);
+	printf("\r\n");
+
 	return SUCCESS;
 }
 
