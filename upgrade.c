@@ -283,7 +283,7 @@ static int write_cmd(struct_xmodem_t *xm, char cmd[])
 {
 	printf(cmd);
 	printf("\r\n");
-	
+
 	int ret = 0;
 	ret = write(*(int *)(xm->serial_handler), cmd, strlen(cmd));
 	if (ret != strlen(cmd))
@@ -333,6 +333,7 @@ static int set_onocoy_config(struct_xmodem_t *xm)
 {
 	int i = 0, ret = 0, j = 0, index = 0;
 
+	char cmd_0[] = "config com1 921600\r\n";
 	char cmd_1[] = "mode base time 60 2 2.5\r\n";
 	char cmd_2[] = "CONFIG SIGNALGROUP 2\r\n";
 	char cmd_3[] = "Config ppp enable E6-HAS\r\n";
@@ -355,6 +356,7 @@ static int set_onocoy_config(struct_xmodem_t *xm)
 
 	ret = xm->recv_data(xm, data_buff, sizeof(data_buff), 10); 
 
+	write_cmd(xm, cmd_0);
 	write_cmd(xm, cmd_1);
 	write_cmd(xm, cmd_2);
 	write_cmd(xm, cmd_3);
