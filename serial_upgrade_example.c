@@ -457,7 +457,7 @@ int main(int argc, const char *argv[])
 	// free(file_buff);
 
 	//init uart 
-	fd_serial = serial_init(args.device, databits, parity, stopbits);
+	fd_serial = serial_init(args.device, DATABITS, PARITY, STOPBITS);
 	if (fd_serial < 0)
 	{
 		printf("fail to serial init, please check.\n");
@@ -510,8 +510,8 @@ int main(int argc, const char *argv[])
 		printf("upgrade fail. ret=%d\n", ret);
 	}
 	
-	fclose(ug.loader_file_handler);
-	fclose(ug.firmware_file_handler);
+	// fclose(ug.loader_file_handler);
+	// fclose(ug.firmware_file_handler);
 	file_buff = NULL;
 
 	return ret;
